@@ -211,6 +211,17 @@ The workflow runs automatically on this cron schedule:
 0 8 */3 * *   →   every 3 days at 8:00 AM UTC (1:30 PM IST)
 ```
 
+---
+
+## 🗺️ Roadmap
+
+- [ ] Add Slack/Telegram delivery option
+- [ ] Topic filtering — only send topics with 3+ articles
+- [ ] Deduplication across runs — don't resurface articles from previous digests
+- [ ] Relevance scoring — rank articles by quality before summarizing
+- [ ] Web UI — browse past digests in a simple dashboard
+
+---
 
 ## 📄 License
 
