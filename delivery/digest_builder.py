@@ -62,7 +62,7 @@ TOPIC_ICONS = {
 
 def build_digest_html(articles: list[dict], date_str: str) -> str:
     """
-    Build a complete HTML email digest from summarized articles.
+    Build a polished, email-safe HTML digest from summarized articles.
 
     Args:
         articles: List of summarized article dicts
@@ -73,70 +73,115 @@ def build_digest_html(articles: list[dict], date_str: str) -> str:
     """
 
     grouped = group_by_topic(articles)
-
-    # Step 1: Build each topic section as an HTML string
     topic_sections_html = ""
+
+    topic_colors = {
+        "LLMs & Foundation Models": ("#7c3aed", "#f5f3ff"),
+        "MLOps & AI Engineering": ("#2563eb", "#eff6ff"),
+        "AI Research Papers": ("#0891b2", "#ecfeff"),
+        "Indian AI Ecosystem": ("#ea580c", "#fff7ed"),
+        "GenAI Tools & Products": ("#db2777", "#fdf2f8"),
+        "AI Jobs & Career": ("#16a34a", "#f0fdf4"),
+    }
+
     for topic, topic_articles in grouped.items():
         icon = TOPIC_ICONS.get(topic, "📌")
+        accent, tint = topic_colors.get(topic, ("#4f46e5", "#eef2ff"))
 
-        # Build article cards for this topic
         articles_html = ""
-        for article in topic_articles:
+        for index, article in enumerate(topic_articles, start=1):
+            title = article["title"][:90] + "..." if len(article["title"]) > 90 else article["title"]
+
             articles_html += f"""
             <div style="
                 background: #ffffff;
-                border: 1px solid #e5e7eb;
-                border-radius: 8px;
-                padding: 16px 20px;
-                margin-bottom: 12px;
+                border: 1px solid #e8eaf0;
+                border-left: 4px solid {accent};
+                border-radius: 14px;
+                padding: 20px 22px;
+                margin-bottom: 14px;
+                box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
             ">
                 <div style="
-                    font-size: 15px;
-                    font-weight: 600;
-                    color: #111827;
-                    margin-bottom: 8px;
-                    line-height: 1.4;
+                    font-size: 11px;
+                    font-weight: 800;
+                    color: {accent};
+                    letter-spacing: 0.08em;
+                    text-transform: uppercase;
+                    margin-bottom: 9px;
                 ">
-                    {article['title'][:80] + '...' if len(article['title']) > 80 else article['title']}
+                    Story {index:02d}
                 </div>
+
+                <div style="
+                    font-size: 17px;
+                    font-weight: 750;
+                    color: #0f172a;
+                    margin-bottom: 10px;
+                    line-height: 1.45;
+                ">
+                    {title}
+                </div>
+
                 <div style="
                     font-size: 14px;
-                    color: #374151;
-                    line-height: 1.6;
-                    margin-bottom: 12px;
+                    color: #475569;
+                    line-height: 1.75;
+                    margin-bottom: 16px;
                 ">
                     {article['summary']}
                 </div>
+
                 <a href="{article['url']}" style="
                     display: inline-block;
+                    background: {tint};
+                    border: 1px solid {accent}22;
+                    border-radius: 999px;
+                    padding: 9px 14px;
                     font-size: 13px;
-                    color: #2563eb;
+                    color: {accent};
                     text-decoration: none;
-                    font-weight: 500;
-                ">Read more →</a>
+                    font-weight: 700;
+                ">Read full story&nbsp; →</a>
             </div>
             """
 
-        # Wrap articles in a topic section
         topic_sections_html += f"""
-        <div style="margin-bottom: 32px;">
+        <div style="margin-bottom: 38px;">
             <div style="
-                font-size: 18px;
-                font-weight: 700;
-                color: #111827;
+                background: {tint};
+                border: 1px solid {accent}22;
+                border-radius: 14px;
+                padding: 14px 16px;
                 margin-bottom: 16px;
-                padding-bottom: 8px;
-                border-bottom: 2px solid #e5e7eb;
             ">
-                {icon} {topic} {len(grouped[topic])} articles
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                    <tr>
+                        <td style="
+                            font-size: 18px;
+                            font-weight: 800;
+                            color: #0f172a;
+                            line-height: 1.3;
+                        ">
+                            <span style="margin-right: 7px;">{icon}</span>{topic}
+                        </td>
+                        <td align="right" style="
+                            font-size: 12px;
+                            font-weight: 700;
+                            color: {accent};
+                            white-space: nowrap;
+                        ">
+                            {len(topic_articles)} STORIES
+                        </td>
+                    </tr>
+                </table>
             </div>
             {articles_html}
         </div>
         """
 
-    # Step 2: Wrap everything in the outer email shell
     total_articles = len(articles)
-    total_topics   = len(grouped)
+    total_topics = len(grouped)
 
     html = f"""
     <!DOCTYPE html>
@@ -144,66 +189,165 @@ def build_digest_html(articles: list[dict], date_str: str) -> str:
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="color-scheme" content="light">
         <title>AI Digest — {date_str}</title>
     </head>
+
     <body style="
         margin: 0;
         padding: 0;
-        background-color: #f3f4f6;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background-color: #eef2f7;
+        font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+        color: #0f172a;
     ">
         <div style="
-            max-width: 640px;
-            margin: 0 auto;
-            padding: 24px 16px;
+            display: none;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            color: transparent;
         ">
+            {total_articles} AI stories across {total_topics} topics — curated for you.
+        </div>
 
-            <!-- HEADER -->
+        <div style="padding: 28px 12px;">
             <div style="
-                background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
-                border-radius: 12px;
-                padding: 28px 32px;
-                margin-bottom: 24px;
-                text-align: center;
+                max-width: 680px;
+                margin: 0 auto;
+                background: #f8fafc;
+                border: 1px solid #e2e8f0;
+                border-radius: 22px;
+                overflow: hidden;
+                box-shadow: 0 18px 50px rgba(15, 23, 42, 0.10);
             ">
+
+                <!-- HERO -->
                 <div style="
-                    font-size: 24px;
-                    font-weight: 700;
-                    color: #ffffff;
-                    margin-bottom: 6px;
+                    background: linear-gradient(135deg, #111827 0%, #312e81 52%, #2563eb 100%);
+                    padding: 42px 34px 34px;
+                    text-align: left;
                 ">
-                    🤖 AI Digest
+                    <div style="
+                        display: inline-block;
+                        background: rgba(255,255,255,0.12);
+                        border: 1px solid rgba(255,255,255,0.18);
+                        border-radius: 999px;
+                        padding: 7px 11px;
+                        font-size: 11px;
+                        font-weight: 800;
+                        color: #dbeafe;
+                        letter-spacing: 0.09em;
+                        text-transform: uppercase;
+                        margin-bottom: 18px;
+                    ">
+                        ✦ Your curated AI briefing
+                    </div>
+
+                    <div style="
+                        font-size: 34px;
+                        font-weight: 850;
+                        color: #ffffff;
+                        letter-spacing: -0.04em;
+                        line-height: 1.08;
+                        margin-bottom: 10px;
+                    ">
+                        AI Digest<span style="color: #93c5fd;">.</span>
+                    </div>
+
+                    <div style="
+                        font-size: 15px;
+                        color: #cbd5e1;
+                        line-height: 1.6;
+                        margin-bottom: 24px;
+                    ">
+                        The signal in AI, minus the noise.<br>
+                        <span style="color: #93c5fd;">{date_str}</span>
+                    </div>
+
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                        <tr>
+                            <td style="
+                                background: rgba(255,255,255,0.10);
+                                border-radius: 12px;
+                                padding: 11px 16px;
+                                color: #ffffff;
+                                font-size: 13px;
+                                font-weight: 700;
+                            ">
+                                <span style="font-size: 20px;">{total_articles}</span><br>
+                                <span style="color: #bfdbfe; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em;">Stories</span>
+                            </td>
+                            <td width="10"></td>
+                            <td style="
+                                background: rgba(255,255,255,0.10);
+                                border-radius: 12px;
+                                padding: 11px 16px;
+                                color: #ffffff;
+                                font-size: 13px;
+                                font-weight: 700;
+                            ">
+                                <span style="font-size: 20px;">{total_topics}</span><br>
+                                <span style="color: #bfdbfe; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em;">Topics</span>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
-                <div style="font-size: 14px; color: #bfdbfe;">
-                    {date_str}
+
+                <!-- CONTENT -->
+                <div style="padding: 34px 28px 10px;">
+                    <div style="
+                        font-size: 12px;
+                        font-weight: 800;
+                        color: #64748b;
+                        letter-spacing: 0.09em;
+                        text-transform: uppercase;
+                        margin-bottom: 24px;
+                    ">
+                        Today's intelligence
+                    </div>
+
+                    {topic_sections_html}
                 </div>
+
+                <!-- FOOTER -->
                 <div style="
-                    font-size: 13px;
-                    color: #93c5fd;
-                    margin-top: 8px;
+                    background: #0f172a;
+                    padding: 28px 24px;
+                    text-align: center;
                 ">
-                    {total_articles} articles across {total_topics} topics
+                    <div style="
+                        font-size: 18px;
+                        font-weight: 800;
+                        color: #ffffff;
+                        margin-bottom: 7px;
+                    ">
+                        Stay curious. Stay ahead.
+                    </div>
+                    <div style="
+                        font-size: 12px;
+                        color: #94a3b8;
+                        line-height: 1.7;
+                    ">
+                        AI Digest · Delivered every 3 days<br>
+                        Built with Python + OpenAI
+                    </div>
                 </div>
+
             </div>
 
-            <!-- TOPIC SECTIONS -->
-            {topic_sections_html}
-
-            <!-- FOOTER -->
             <div style="
+                max-width: 680px;
+                margin: 14px auto 0;
                 text-align: center;
-                padding: 20px;
-                font-size: 12px;
-                color: #9ca3af;
-                border-top: 1px solid #e5e7eb;
-                margin-top: 16px;
+                font-size: 11px;
+                color: #94a3b8;
             ">
-                AI Digest · Delivered every 3 days · Built with Python + Openai
+                Curated intelligence for builders, researchers, and AI enthusiasts.
             </div>
-
         </div>
     </body>
     </html>
     """
 
     return html
+

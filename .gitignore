@@ -2,3 +2,4 @@
 __pycache__/
 *.pyc
 venv/
+digest_builder_old.py
