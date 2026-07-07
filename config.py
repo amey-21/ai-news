@@ -53,7 +53,7 @@ RSS_MAX_RESULTS    = 3      # articles per feed (most recent N entries)
 # LLM CONFIGURATION
 
 
-LLM_PROVIDER    = "openai"                    # "groq" or "openai"
+LLM_PROVIDER    = "openai"                    
 
 LLM_CONFIG = {
     "openai": {

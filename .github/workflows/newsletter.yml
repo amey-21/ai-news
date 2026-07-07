@@ -74,7 +74,7 @@ jobs:
       - name: Run AI digest agent
         env:
           TAVILY_API_KEY:       ${{ secrets.TAVILY_API_KEY }}
-          GROQ_API_KEY:         ${{ secrets.GROQ_API_KEY }}
+          OPENAI_API_KEY:       ${{ secrets.OPENAI_API_KEY }}
           GMAIL_ADDRESS:        ${{ secrets.GMAIL_ADDRESS }}
           GMAIL_APP_PASSWORD:   ${{ secrets.GMAIL_APP_PASSWORD }}
           RECIPIENT_EMAIL:      ${{ secrets.RECIPIENT_EMAIL }}
