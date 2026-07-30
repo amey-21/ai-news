@@ -3,6 +3,7 @@
 import feedparser
 from config import RSS_FEEDS, RSS_MAX_RESULTS
 from datetime import datetime, timezone
+import time
 
 
 def fetch_rss_articles(topic: str) -> list[dict]:
@@ -13,7 +14,7 @@ def fetch_rss_articles(topic: str) -> list[dict]:
         topic: One of the topic strings defined in config.TOPICS
 
     Returns:
-        List of article dicts with keys: { topic, title, url, content, source }
+        List of article dicts with keys: { topic, title, url, content, source, score }
         Returns empty list if topic has no feeds configured.
     """
 
@@ -45,12 +46,27 @@ def fetch_rss_articles(topic: str) -> list[dict]:
                     or entry.get("title", "")
                 )
 
+                # Extract published date for scoring
+                published = entry.get("published_parsed") or entry.get("updated_parsed")
+                if published:
+                    # published is a time.struct_time in UTC
+                    published_timestamp = time.mktime(published)
+                else:
+                    # fallback to current time if no date
+                    published_timestamp = time.time()
+
+                current_time = time.time()
+                max_age_seconds = 30 * 24 * 60 * 60  # 30 days for full recency score
+                age_seconds = current_time - published_timestamp
+                recency_score = max(0.0, 1.0 - (age_seconds / max_age_seconds))
+
                 articles.append({
                     "topic":   topic,
                     "title":   entry.get("title", "No title"),
                     "url":     entry.get("link", ""),
                     "content": content,
                     "source":  "rss",
+                    "score":   recency_score,
                 })
 
         except Exception as e:

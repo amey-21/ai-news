@@ -63,6 +63,7 @@ def fetch_tavily_articles(topic: str) -> list[dict]:
             "url":     result.get("url", ""),
             "content": result.get("content", ""),   # Tavily-extracted clean text
             "source":  "tavily",
+            "score":   result.get("score", 0.5),    # Tavily relevance score (0-1), default 0.5 if missing
         })
 
     print(f"[Tavily] Fetched {len(articles)} articles for topic: {topic}")

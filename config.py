@@ -29,18 +29,36 @@ RSS_FEEDS = {
         "https://huggingface.co/blog/feed.xml",
         "https://openai.com/blog/rss.xml",
         "https://www.anthropic.com/news/rss",
+        "https://ai.googleblog.com/atom/",
+        "https://ai.meta.com/blog/feed/",
+        "https://deepmind.com/blog/feed.xml",
     ],
     "AI Research Papers": [
         "http://arxiv.org/rss/cs.AI",
         "http://arxiv.org/rss/cs.LG",
         "http://arxiv.org/rss/cs.CL",
+        "http://arxiv.org/rss/cs.CV",
+        "http://arxiv.org/rss/stat.ML",
     ],
     "MLOps & AI Engineering": [
         "https://mlops.community/feed/",
         "https://towardsdatascience.com/feed",
+        "https://aws.amazon.com/blogs/machine-learning/feed/",
+        "https://databricks.com/blog/feed/",
+        "https://cloud.google.com/blog/topics/ai/rss",
     ],
     "GenAI Tools & Products": [
         "https://www.deeplearning.ai/the-batch/feed/",
+        "https://www.producthunt.com/feed?category=ai-and-ml",
+        "https://therelease.org/feed/",
+    ],
+    "Indian AI Ecosystem": [
+        "https://analyticsindiamag.com/feed/",
+        "https://inc42.com/feed/",
+        "https://yourstory.com/feed/tag/ai/",
+    ],
+    "AI Jobs & Career": [
+        # Few reliable AI-specific job RSS feeds; leave empty for now
     ],
 }
 
@@ -48,6 +66,7 @@ RSS_FEEDS = {
 
 TAVILY_MAX_RESULTS = 5      # articles per topic per Tavily search
 RSS_MAX_RESULTS    = 3      # articles per feed (most recent N entries)
+ARXIV_MAX_RESULTS  = 3      # articles per topic from ArXiv API
 
 
 # LLM CONFIGURATION
@@ -69,3 +88,4 @@ LLM_CONFIG = {
 BATCH_SIZE          = 10      # articles processed in parallel per batch
 BATCH_DELAY_SECONDS = 0.5     # sleep between batches to respect rate limits
 MAX_SUMMARY_TOKENS  = 200     # keep summaries short — 3 sentences max
+ARTICLES_PER_TOPIC  = 5       # number of articles to include per topic section (3-5 recommended)
