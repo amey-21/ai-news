@@ -1,4 +1,4 @@
-# 🤖 AI Digest Agent
+# AI Digest Agent
 
 An autonomous AI agent that searches the web for the latest AI news, summarizes it using an LLM, and delivers a clean HTML newsletter to your inbox every 3 days fully automated via GitHub Actions.
 
@@ -9,27 +9,27 @@ An autonomous AI agent that searches the web for the latest AI news, summarizes 
 
 ---
 
-## 📬 Sample Output
+## Sample Output
 
 ![Digest Screenshot](assets/mail.png)
 
 > A clean HTML digest delivered to your inbox every 3 days, grouped by topic with AI-generated summaries and source links.
 
 ```
-🤖 AI Digest — July 06, 2026
+AI Digest — July 06, 2026
 39 articles across 6 topics
 
-🧠 LLMs & Foundation Models (11 articles)
-⚙️  MLOps & AI Engineering (7 articles)
-📄 AI Research Papers (8 articles)
-🇮🇳 Indian AI Ecosystem (4 articles)
-🛠️  GenAI Tools & Products (6 articles)
-💼 AI Jobs & Career (3 articles)
+LLMs & Foundation Models (11 articles)
+MLOps & AI Engineering (7 articles)
+AI Research Papers (8 articles)
+Indian AI Ecosystem (4 articles)
+GenAI Tools & Products (6 articles)
+AI Jobs & Career (3 articles)
 ```
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 GitHub Actions (every 3 days)
@@ -50,7 +50,7 @@ GitHub Actions (every 3 days)
 
 ---
 
-## ✨ Features
+## Features
 
 - **Multi-source search** — Tavily API for dynamic web search + curated RSS feeds for high-quality known sources
 - **6 AI topics** — LLMs, MLOps, Research Papers, Indian AI Ecosystem, GenAI Tools, AI Jobs
@@ -63,7 +63,7 @@ GitHub Actions (every 3 days)
 
 ---
 
-## 🗂️ Project Structure
+## Project Structure
 
 ```
 ai-digest-agent/
@@ -95,7 +95,7 @@ ai-digest-agent/
 
 ---
 
-## ⚙️ Tech Stack
+## Tech Stack
 
 | Component | Technology | Why |
 |---|---|---|
@@ -108,7 +108,7 @@ ai-digest-agent/
 
 ---
 
-## 🚀 Local Setup
+## Local Setup
 
 ### 1. Clone the repository
 
@@ -161,7 +161,7 @@ Check your inbox. The digest should arrive within 2-3 minutes.
 
 ---
 
-## 🔑 Getting API Keys
+## Getting API Keys
 
 | Key | Where to get it | Free tier |
 |---|---|---|
@@ -173,7 +173,7 @@ Check your inbox. The digest should arrive within 2-3 minutes.
 
 ---
 
-## ☁️ GitHub Actions Deployment
+## GitHub Actions Deployment
 
 ### 1. Push to GitHub
 
@@ -211,8 +211,19 @@ The workflow runs automatically on this cron schedule:
 0 8 */3 * *   →   every 3 days at 8:00 AM UTC (1:30 PM IST)
 ```
 
+---
 
-## 📄 License
+## Roadmap
+
+- [ ] Add Slack/Telegram delivery option
+- [ ] Topic filtering — only send topics with 3+ articles
+- [ ] Deduplication across runs — don't resurface articles from previous digests
+- [ ] Relevance scoring — rank articles by quality before summarizing
+- [ ] Web UI — browse past digests in a simple dashboard
+
+---
+
+## License
 
 MIT License — free to use, modify, and distribute.
 
