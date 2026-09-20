@@ -16,7 +16,7 @@ An autonomous AI agent that searches the web for the latest AI news, summarizes 
 > A clean HTML digest delivered to your inbox every 3 days, grouped by topic with AI-generated summaries and source links.
 
 ```
-AI Digest — July 06, 2026
+AI Digest - July 06, 2026
 39 articles across 6 topics
 
 LLMs & Foundation Models (11 articles)
@@ -52,14 +52,14 @@ GitHub Actions (every 3 days)
 
 ## Features
 
-- **Multi-source search** — Tavily API for dynamic web search + curated RSS feeds for high-quality known sources
-- **6 AI topics** — LLMs, MLOps, Research Papers, Indian AI Ecosystem, GenAI Tools, AI Jobs
-- **Batched async summarization** — 10 parallel LLM calls per batch; respects API rate limits
-- **Clean HTML digest** — grouped by topic, inline CSS for email client compatibility
-- **Plain text fallback** — accessible on all email clients including terminal and mobile
-- **Fully automated** — GitHub Actions runs on a cron schedule every 3 days
-- **Zero-downtime failures** — graceful degradation if one source fails; rest of digest still sends
-- **Secure secrets** — all API keys stored as GitHub Secrets, never in source code
+- **Multi-source search** - Tavily API for dynamic web search + curated RSS feeds for high-quality known sources
+- **6 AI topics** - LLMs, MLOps, Research Papers, Indian AI Ecosystem, GenAI Tools, AI Jobs
+- **Batched async summarization** - 10 parallel LLM calls per batch; respects API rate limits
+- **Clean HTML digest** - grouped by topic, inline CSS for email client compatibility
+- **Plain text fallback** - accessible on all email clients including terminal and mobile
+- **Fully automated** - GitHub Actions runs on a cron schedule every 3 days
+- **Zero-downtime failures** - graceful degradation if one source fails; rest of digest still sends
+- **Secure secrets** - all API keys stored as GitHub Secrets, never in source code
 
 ---
 
@@ -74,8 +74,8 @@ ai-digest-agent/
 │
 ├── search/
 │   ├── __init__.py
-│   ├── tavily_searcher.py      # Tavily API — dynamic web search per topic
-│   └── rss_fetcher.py          # RSS feed parser — curated high-quality sources
+│   ├── tavily_searcher.py      # Tavily API - dynamic web search per topic
+│   └── rss_fetcher.py          # RSS feed parser - curated high-quality sources
 │
 ├── synthesis/
 │   ├── __init__.py
@@ -86,7 +86,7 @@ ai-digest-agent/
 │   ├── digest_builder.py       # HTML email assembly, grouped by topic
 │   └── email_sender.py         # Gmail SMTP delivery with plain text fallback
 │
-├── agent.py                    # Main orchestrator — ties all layers together
+├── agent.py                    # Main orchestrator - ties all layers together
 ├── config.py                   # Single source of truth for all constants
 ├── requirements.txt            # Pinned dependencies
 ├── .env.example                # Template for local environment setup
@@ -169,7 +169,7 @@ Check your inbox. The digest should arrive within 2-3 minutes.
 | `OPENAI_API_KEY` | [platform.openai.com](https://platform.openai.com) | Pay per use (very cheap) |
 | `GMAIL_APP_PASSWORD` | [myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords) | Free (requires 2FA) |
 
-> **Gmail App Password:** You must have 2-Factor Authentication enabled on your Google account before generating an App Password. This is a scoped credential — it can only send email, not access the rest of your account.
+> **Gmail App Password:** You must have 2-Factor Authentication enabled on your Google account before generating an App Password. This is a scoped credential - it can only send email, not access the rest of your account.
 
 ---
 
@@ -216,16 +216,16 @@ The workflow runs automatically on this cron schedule:
 ## Roadmap
 
 - [ ] Add Slack/Telegram delivery option
-- [ ] Topic filtering — only send topics with 3+ articles
-- [ ] Deduplication across runs — don't resurface articles from previous digests
-- [ ] Relevance scoring — rank articles by quality before summarizing
-- [ ] Web UI — browse past digests in a simple dashboard
+- [ ] Topic filtering - only send topics with 3+ articles
+- [ ] Deduplication across runs - don't resurface articles from previous digests
+- [ ] Relevance scoring - rank articles by quality before summarizing
+- [ ] Web UI - browse past digests in a simple dashboard
 
 ---
 
 ## License
 
-MIT License — free to use, modify, and distribute.
+MIT License - free to use, modify, and distribute.
 
 ---
 
